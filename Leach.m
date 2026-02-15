@@ -1,18 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                                       %
-% This is the LEACH [1] code we have used.                                              %
-% The same code can be used for FAIR if m=1                                             %
-%                                                                                       %
-% [1] W.R.Heinzelman, A.P.Chandrakasan and H.Balakrishnan,                              %
-% An application-specific protocol architecture for wireless microsensor networks       %
-%                                                                                       %
-% IEEE Transactions on Wireless Communications, 1(4):660-670,2002                       %
-% Mohammad Hossein Homaei                                                               %
-%                                           Homaei@ieee.org                             %
-% Google Scholar: https://scholar.google.com/citations?user=8IGmFIoAAAAJ&hl=en&oi=ao    %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %
 % LEACH Protocol %
 % %
 
@@ -49,14 +34,6 @@ Efs = 10 * 0.000000000001; % Energy for free space model
 Emp = 0.0013 * 0.000000000001; % Energy for multi-path fading model
 EDA = 5 * 0.000000001; % Energy consumed during data aggregation
 
-% Values for Heterogeneity 
-% Percentage of nodes that are advanced
-
-m = 0.1;
-% Parameter alpha for energy model
-
-a = 1;
-
 % Maximum number of rounds for the simulation
 
 rmax = 200;
@@ -81,24 +58,10 @@ for i = 1:1:n
     % initially there are no cluster heads only nodes
     
     S(i).type = 'N';
-   
-    temp_rnd0 = i;
-    % Random Election of Normal Nodes
-    
-    if (temp_rnd0 >= m * n + 1) 
-        S(i).E = Eo;
-        S(i).ENERGY = 0;
-        plot(S(i).xd, S(i).yd, 'o');
-        hold on;
-    end
-    % Random Election of Advanced Nodes
-    
-    if (temp_rnd0 < m * n + 1)  
-        S(i).E = Eo * (1 + a);
-        S(i).ENERGY = 1;
-        plot(S(i).xd, S(i).yd, '+');
-        hold on;
-    end
+
+    S(i).E = Eo;
+    plot(S(i).xd, S(i).yd, 'o');
+    hold on;
 end
 S(n + 1).xd = sink.x;
 S(n + 1).yd = sink.y;
@@ -160,17 +123,6 @@ for r = 0:1:rmax
 
 dead = 0;
 
-% Number of dead Advanced Nodes - Counts the number of dead advanced nodes
-
-dead_a = 0;
-
-% Number of dead Normal Nodes - Counts the number of dead normal nodes
-
-dead_n = 0;
-
-
-
-
 % Counter for bits transmitted to Base Station and to Cluster Heads
 
 packets_TO_BS = 0;
@@ -189,22 +141,11 @@ for i = 1:1:n
     if (S(i).E <= 0)
         plot(S(i).xd, S(i).yd, 'red .');
         dead = dead + 1;
-        if (S(i).ENERGY == 1)
-            dead_a = dead_a + 1;
-        end
-        if (S(i).ENERGY == 0)
-            dead_n = dead_n + 1;
-        end
         hold on;    
     end
     if S(i).E > 0
         S(i).type = 'N';
-        if (S(i).ENERGY == 0)  
-            plot(S(i).xd, S(i).yd, 'o');
-        end
-        if (S(i).ENERGY == 1)  
-            plot(S(i).xd, S(i).yd, '+');
-        end
+        plot(S(i).xd, S(i).yd, 'o');
         hold on;
     end
 end
@@ -214,8 +155,6 @@ plot(S(n + 1).xd, S(n + 1).yd, 'x');
 
 STATISTICS(r + 1).DEAD = dead;
 DEAD(r + 1) = dead;
-DEAD_N(r + 1) = dead_n;
-DEAD_A(r + 1) = dead_a;
 
 % When the first node dies
 
@@ -331,7 +270,6 @@ end
 %  first_dead: the round where the first node died                                    %
 %                                                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 
