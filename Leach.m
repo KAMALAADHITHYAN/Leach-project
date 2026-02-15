@@ -325,8 +325,6 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   STATISTICS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                                     %
 %  DEAD  : a rmax x 1 array of number of dead nodes/round 			      %
-%  DEAD_A : a rmax x 1 array of number of dead Advanced nodes/round	      	      %
-%  DEAD_N : a rmax x 1 array of number of dead Normal nodes/round                     %
 %  CLUSTERHS : a rmax x 1 array of number of Cluster Heads/round                      %
 %  PACKETS_TO_BS : a rmax x 1 array of number packets send to Base Station/round      %
 %  PACKETS_TO_CH : a rmax x 1 array of number of packets send to ClusterHeads/round   %
